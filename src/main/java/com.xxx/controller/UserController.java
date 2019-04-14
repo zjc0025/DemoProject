@@ -42,7 +42,7 @@ public class UserController {
     public Map page(){
         logger.info("查询单个用户");
         List<User> users = this.userService.userPage();
-
+        //11
         Map map = new HashMap();
         map.put("status", "成功");
         map.put("data", users);
