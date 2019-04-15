@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+    <!-- 配置shiro框架的过滤器工厂bean -->
+    <bean id="shiroFilter"
+          class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" />
+        <property name="loginUrl" value="/login.html" />
+        <property name="successUrl" value="/successUrl.jsp" />
+        <property name="unauthorizedUrl" value="/unauthorizedUrl.jsp" />
+        <!-- 指定URL拦截策略 ,静态资源放行，登录放行，其他的需要认证也就是登录-->
+        <property name="filterChainDefinitions">
+            <value>
+                /css/**=anon
+                /resources/**=anon
+                /WEB-INF/views/**=anon
+                /images/**=anon
+                /login.jsp*=anon
+                //user/login2=anon
+                /validatecode.jsp*=anon
+                /**=authc
+            </value>
+        </property>
+    </bean>
+    <!-- 配置安全管理器 -->
+    <bean id="securityManager"
+          class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="gloabRealm" />
+        <!-- 注入缓存管理器 -->
+        <property name="cacheManager" ref="cacheManager" />
+    </bean>
+    <!-- 注册自定义realm -->
+    <bean id="gloabRealm"
+          class="com.xxx.shiro.GloabRealm" />
+    <!-- 注册缓存管理器 -->
+    <bean id="cacheManager"
+          class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <!-- 注入ehcache配置文件 -->
+        <property name="cacheManagerConfigFile"
+                  value="classpath:ehcache.xml" />
+    </bean>
+    <!-- 开启shiro注解加到springmvc.xml中去了，因为不加那里会导致注解失效 -->
+</beans>

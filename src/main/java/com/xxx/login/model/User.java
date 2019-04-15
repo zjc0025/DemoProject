@@ -1,4 +1,4 @@
-package com.xxx.model;
+package com.xxx.login.model;
 
 public class User {
 

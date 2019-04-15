@@ -1,8 +1,8 @@
-package com.xxx.service.impl;
+package com.xxx.login.service.impl;
 
-import com.xxx.dao.IUserDao;
-import com.xxx.model.User;
-import com.xxx.service.IUserService;
+import com.xxx.login.dao.IUserDao;
+import com.xxx.login.model.User;
+import com.xxx.login.service.IUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

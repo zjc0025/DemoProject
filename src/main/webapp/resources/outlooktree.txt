@@ -1,0 +1,11 @@
+[
+	{id: "user", text: "功能列表"},
+
+	{id: "account", text: "账号管理", pid: "user" },
+	{id: "drug", text: "药品目录维护", pid: "user" },
+	{id: "inAndOut", text: "药品出入库", pid: "user" },
+	{id: "drugCount", text: "库存查询统计", pid: "user" },
+
+
+
+]

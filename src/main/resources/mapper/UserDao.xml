@@ -2,14 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 设置为IUserDao接口方法提供sql语句配置 -->
-<mapper namespace="com.xxx.dao.IUserDao">
+<mapper namespace="com.xxx.login.dao.IUserDao">
 
-    <select id="queryUser" resultType="User" parameterType="long">
+    <select id="queryUser" resultType="com.xxx.login.model.User" parameterType="long">
         SELECT * FROM tuser WHERE id = #{id}
     </select>
 
-    <select id="userPage" resultType="User">
+    <select id="userPage" resultType="com.xxx.login.model.User">
         SELECT * FROM tuser
+    </select>
+
+    <select id="findUserByUsername" parameterType="java.lang.String" resultType="com.xxx.login.model.User">
+        SELECT * FROM tuser where username = #{username}
     </select>
 
 </mapper>

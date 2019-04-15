@@ -1,6 +1,6 @@
-package com.xxx.service;
+package com.xxx.login.service;
 
-import com.xxx.model.User;
+import com.xxx.login.model.User;
 
 import java.util.List;
 
