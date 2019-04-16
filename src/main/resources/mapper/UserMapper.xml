@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.xxx.login.dao.IUserMapper">
+
+    <select id="queryUser" resultType="com.xxx.login.model.User" parameterType="long">
+        SELECT * FROM tuser WHERE id = #{id}
+    </select>
+
+    <select id="userPage" resultType="com.xxx.login.dto.UserDto">
+        select u.user_id userId,
+           u.username userName,
+           u.loginname loginName,
+           r.role_name roleName,
+           u.status,
+           u.create_time createTime,
+           u.update_time updateTime
+        from t_user u, t_user_role ur, t_role r
+        where u.user_id = ur.user_id and ur.role_id = r.role_id
+        order by #{sortField} ${sortOrder}
+    </select>
+
+    <select id="findUserByUsername" parameterType="java.lang.String" resultType="com.xxx.login.model.User">
+        SELECT * FROM t_user where loginname = #{loginName}
+    </select>
+
+    <select id="findPermissionByLoginName" parameterType="java.lang.String" resultType="java.lang.String">
+        select m.permission_name from t_permission m ,t_user u ,t_user_role ur, t_role_permission rm
+        where m.permission_id = rm.permission_id and ur.role_id = rm.role_id and ur.user_id = u.user_id and u.loginname = #{loginName}
+    </select>
+
+    <insert id="addAccount" parameterType="com.xxx.login.dto.UserDto">
+      insert into t_user (user_id, username, loginname, password, status, create_time) values
+      (#{userId}, #{userName}, #{loginName}, #{password}, #{status}, sysdate)
+    </insert>
+
+    <select id="findRoleIdByName" parameterType="java.lang.String" resultType="java.lang.String">
+        select role_id from t_role where role_name = #{roleName}
+    </select>
+
+    <insert id="insertUserRole" parameterType="com.xxx.login.model.UserRole">
+        insert into t_user_role (id, user_id, role_id) values
+        (#{id}, #{userId}, #{roleId})
+    </insert>
+
+</mapper>

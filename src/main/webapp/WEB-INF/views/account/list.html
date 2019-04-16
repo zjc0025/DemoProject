@@ -12,18 +12,16 @@
 
 </head>
 <body>
-<h1>账号维护</h1>
+<h1>账号管理</h1>
 
-
-<div style="width:800px;">
+<div style="width:100%;">
     <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
         <table style="width:100%;">
             <tr>
                 <td style="width:100%;">
-                    <a class="mini-button" iconCls="icon-add" onclick="addRow()" plain="true" tooltip="增加...">增加</a>
-                    <a class="mini-button" iconCls="icon-remove" onclick="removeRow()" plain="true">删除</a>
-                    <span class="separator"></span>
-                    <a class="mini-button" iconCls="icon-save" onclick="saveData()" plain="true">保存</a>
+                    <a class="mini-button" iconCls="icon-add" onclick="add()">增加</a>
+                    <a class="mini-button" iconCls="icon-add" onclick="edit()">编辑</a>
+                    <a class="mini-button" iconCls="icon-remove" onclick="remove()">删除</a>
                 </td>
                 <td style="white-space:nowrap;">
                     <input id="key" class="mini-textbox" emptyText="请输入姓名" style="width:150px;" onenter="onKeyEnter"/>
@@ -33,123 +31,125 @@
         </table>
     </div>
 </div>
-<div id="datagrid1" class="mini-datagrid" style="width:800px;height:280px;"
-     url="../data/AjaxService.aspx?method=SearchEmployees" idField="id"
-     allowResize="true" pageSize="20"
-     allowCellEdit="true" allowCellSelect="true" multiSelect="true"
-     editNextOnEnterKey="true"  editNextRowCell="true"
-
->
+<div id="datagrid1" class="mini-datagrid" style="width:100%;height:330px;" allowResize="true"
+     url="/user/page"  idField="userId" multiSelect="true">
     <div property="columns">
-        <div type="indexcolumn"></div>
-        <div type="checkcolumn"></div>
-        <div name="LoginName"  field="loginname" headerAlign="center" allowSort="true" width="150" >员工帐号
-            <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200" />
-        </div>
-        <div field="age" width="100" allowSort="true" >年龄
-            <input property="editor" class="mini-spinner"  minValue="0" maxValue="200" value="25" style="width:100%;"/>
-        </div>
-        <div name="birthday" field="birthday" width="100" allowSort="true" dateFormat="yyyy-MM-dd">出生日期
-            <input property="editor" class="mini-datepicker" style="width:100%;"/>
-        </div>
-        <div field="remarks" width="120" headerAlign="center" allowSort="true">备注
-            <input property="editor" class="mini-textarea" style="width:200px;" minWidth="200" minHeight="50"/>
-        </div>
-        <!--ComboBox：本地数据-->
-        <div type="comboboxcolumn" autoShowPopup="true" name="gender" field="gender" width="100" allowSort="true"  align="center" headerAlign="center">性别
-            <input property="editor" class="mini-combobox" style="width:100%;" data="Genders" />
-        </div>
-        <!--ComboBox：远程数据-->
-        <div type="comboboxcolumn" field="country" width="100" headerAlign="center" >国家
-            <input property="editor" class="mini-combobox" style="width:100%;" url="../data/countrys.txt" />
-        </div>
-        <div type="checkboxcolumn" field="married" trueValue="1" falseValue="0" width="60" headerAlign="center">婚否</div>
+        <!--<div type="indexcolumn"></div>        -->
+        <div type="checkcolumn" ></div>
+        <div field="userName" width="120" headerAlign="center" allowSort="true">用户名</div>
+        <div field="loginName" width="120" headerAlign="center" allowSort="true">登录名</div>
+        <div field="roleName" width="120" headerAlign="center" allowSort="true">角色</div>
+        <div field="status" width="120" headerAlign="center" allowSort="true">状态</div>
+        <div field="createTime" width="120" headerAlign="center" allowSort="true" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+        <div field="updateTime" width="120" headerAlign="center" allowSort="true" dateFormat="yyyy-MM-dd HH:mm:ss">更新时间</div>
+
     </div>
 </div>
+
 <script type="text/javascript">
-
-    var Genders = [{ id: 1, text: '男' }, { id: 2, text: '女'}];
-
     mini.parse();
 
     var grid = mini.get("datagrid1");
     grid.load();
 
-
     var menu = new ColumnsMenu(grid);
 
-    //////////////////////////////////////////////////////
+    function add() {
 
-    function search() {
-        var key = mini.get("key").getValue();
+        mini.open({
+            targetWindow: window,
 
-        grid.load({ key: key });
+            url: "/addAccount",
+            title: "添加账号", width: 500, height: 200,
+            onload: function () {
+                var iframe = this.getIFrameEl();
+                var data = { action: "new" };
+                iframe.contentWindow.SetData(data);
+            },
+            ondestroy: function (action) {
+
+                grid.reload();
+            }
+        });
     }
 
+    function edit() {
+
+        var row = grid.getSelected();
+        if (row) {
+            mini.open({
+                url: bootPATH + "../demo/CommonLibs/EmployeeWindow.html",
+                title: "编辑员工", width: 600, height: 400,
+                onload: function () {
+                    var iframe = this.getIFrameEl();
+                    var data = { action: "edit", id: row.id };
+                    iframe.contentWindow.SetData(data);
+
+                },
+                ondestroy: function (action) {
+                    //var iframe = this.getIFrameEl();
+
+                    grid.reload();
+
+                }
+            });
+
+        } else {
+            alert("请选中一条记录");
+        }
+
+    }
+    function remove() {
+
+        var rows = grid.getSelecteds();
+        if (rows.length > 0) {
+            if (confirm("确定删除选中记录？")) {
+                var ids = [];
+                for (var i = 0, l = rows.length; i < l; i++) {
+                    var r = rows[i];
+                    ids.push(r.id);
+                }
+                var id = ids.join(',');
+                grid.loading("操作中，请稍后......");
+                $.ajax({
+                    url: "../data/AjaxService.aspx?method=RemoveEmployees&id=" +id,
+                    success: function (text) {
+                        grid.reload();
+                    },
+                    error: function () {
+                    }
+                });
+            }
+        } else {
+            alert("请选中一条记录");
+        }
+    }
+    function search() {
+        var key = mini.get("key").getValue();
+        grid.load({ key: key });
+    }
     function onKeyEnter(e) {
         search();
     }
-
-    function addRow() {
-        var newRow = { name: "New Row" };
-        grid.addRow(newRow, 0);
-
-        grid.beginEditCell(newRow, "LoginName");
+    /////////////////////////////////////////////////
+    function onBirthdayRenderer(e) {
+        var value = e.value;
+        if (value) return mini.formatDate(value, 'yyyy-MM-dd');
+        return "";
     }
-    function removeRow() {
-        var rows = grid.getSelecteds();
-        if (rows.length > 0) {
-
-            grid.removeRows(rows, true);
+    function onMarriedRenderer(e) {
+        if (e.value == 1) return "是";
+        else return "否";
+    }
+    var Genders = [{ id: 1, text: '男' }, { id: 2, text: '女'}];
+    function onGenderRenderer(e) {
+        for (var i = 0, l = Genders.length; i < l; i++) {
+            var g = Genders[i];
+            if (g.id == e.value) return g.text;
         }
-    }
-    function saveData() {
-
-        saveGrid(grid, {
-            url: "../data/AjaxService.aspx?method=SaveEmployees"
-        });
-
-//            saveGrid(grid, {
-//                url: "../data/AjaxService.aspx?method=SaveEmployees",
-//                callback: function (success, result) {
-//
-//                }
-//            });
+        return "";
     }
 
-
-    grid.on("celleditenter", function (e) {
-        var index = grid.indexOf(e.record);
-        if (index == grid.getData().length - 1) {
-            var row = {};
-            grid.addRow(row);
-        }
-    });
-
-    grid.on("beforeload", function (e) {
-        if (grid.getChanges().length > 0) {
-            if (confirm("有增删改的数据未保存，是否取消本次操作？")) {
-                e.cancel = true;
-            }
-        }
-    });
-
-
-    //        grid.on("cellcommitedit", function (e) {
-    //            if (e.field == "loginname") {
-    //                if (e.value == "111") {
-    //                    alert("不允许为111");
-    //                    e.cancel = true;
-    //                }
-    //            }
-    //        });
-
-    //        grid.on('beforeload', function (e) {
-    //            if (grid.getChanges().length > 0) {
-    //                e.cancel = true;
-    //                alert('有未保存的数据');
-    //            }
-    //        });
 
 </script>
 
