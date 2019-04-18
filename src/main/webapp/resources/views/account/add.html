@@ -30,11 +30,11 @@
             <tr>
                 <td style="width:80px;"> 登录名：</td>
                 <td style="width:150px;">
-                    <input name="loginName" class="mini-textbox" required="true"  emptyText="请输入登录名"/>
+                    <input name="loginName" class="mini-textbox" onvalidation="onLoginNameValidation" required="true"  emptyText="请输入登录名"/>
                 </td>
                 <td style="width:80px;">密码：</td>
                 <td style="width:150px;">
-                    <input name="password" class="mini-password" required="true"  emptyText="请输入密码"/>
+                    <input name="password" class="mini-password" onvalidation="onPasswordValidation" required="true"  emptyText="请输入密码"/>
                 </td>
             </tr>
             <tr>
@@ -63,6 +63,10 @@
         <a class="mini-button" onclick="onCancel" style="width:60px;">取消</a>
     </div>
 </form>
+
+</body>
+</html>
+
 <script type="text/javascript">
 
     var form;
@@ -84,6 +88,10 @@
 
 
     function SaveData() {
+        form.validate();
+        if(form.isValid() == false){
+            return;
+        }
         var data = form.getData();
         var json = mini.encode(data);
         $.ajax({
@@ -96,41 +104,13 @@
             success: function (text) {
                 if(text == 'true'){
                     mini.alert("已保存!","成功",function(){CloseWindow("success");});
-                    // mini.alert("添加成功");
-                    // CloseWindow("success");
                 }else{
-                    mini.alert("未保存!","失败",function(){CloseWindow("success");});
+                    mini.alert("未保存!","失败",function(){CloseWindow("cancel");});
                 }
             }
         });
     }
 
-    ////////////////////
-    //标准方法接口定义
-    function SetData(data) {
-        if (data.action == "edit") {
-            //跨页面传递的数据对象，克隆后才可以安全使用
-            data = mini.clone(data);
-
-            $.ajax({
-                url: "../data/AjaxService.aspx?method=GetEmployee&id=" + data.id,
-                cache: false,
-                success: function (text) {
-                    var o = mini.decode(text);
-                    form.setData(o);
-                    form.setChanged(false);
-
-                    onDeptChanged();
-                    mini.getbyName("position").setValue(o.position);
-                }
-            });
-        }
-    }
-
-    function GetData() {
-        var o = form.getData();
-        return o;
-    }
     function CloseWindow(action) {
         if (action == "close" && form.isChanged()) {
             if (confirm("数据被修改了，是否先保存？")) {
@@ -146,18 +126,45 @@
     function onCancel(e) {
         CloseWindow("cancel");
     }
-    //////////////////////////////////
-    function onDeptChanged(e) {
-        var deptCombo = mini.getbyName("dept_id");
-        var positionCombo = mini.getbyName("position");
-        var dept_id = deptCombo.getValue();
 
-        positionCombo.load("../data/AjaxService.aspx?method=GetPositionsByDepartmenId&id=" + dept_id);
-        positionCombo.setValue("");
+    function onLoginNameValidation(e) {
+        if(!checkData(e.value)){
+            e.errorText = "用户名只能包含字母数字下划线";
+            e.isValid = false;
+            return;
+        }
+        if (e.isValid) {
+            $.ajax({
+                url: "/user/checkAccount",
+                type: "post",
+                data: e.value,
+                // dataType:"json",
+                contentType:'application/json; charset=utf-8',
+                async:false,
+                success: function (text) {
+                    if(text == false){
+                        e.errorText = "用户名已存在";
+                        e.isValid = false;
+                    }
+                }
+            });
+        }
     }
 
+    function checkData(data){
+        var reg = /^[a-zA-Z0-9_]{3,20}$/;
+        var res = reg.test(data);
+        if (res){
+            return true;
+        }
+        return false;
+    }
 
+    function onPasswordValidation(e){
+        if (e.value.length < 6){
+            e.errorText = "密码不能少于6位";
+            e.isValid = false;
+        }
+    }
 
 </script>
-</body>
-</html>

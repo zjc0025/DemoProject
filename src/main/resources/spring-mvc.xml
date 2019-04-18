@@ -22,7 +22,7 @@
     <!-- 配置jsp 显示ViewResolver -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="prefix" value="/resources/views/"/>
         <property name="suffix" value=".html"/>
     </bean>
 
@@ -35,7 +35,7 @@
               <!--&ndash;&gt;-->
             <!--<mvc:mapping path="/**" />-->
             <!--&lt;!&ndash; 需排除拦截的地址 &ndash;&gt;-->
-            <!--&lt;!&ndash;  <mvc:exclude-mapping path="/userController/login"/>  &ndash;&gt;-->
+            <!--&lt;!&ndash;  <mvc:exclude-mapping path="/userController/user"/>  &ndash;&gt;-->
             <!--<bean id="commonInterceptor" class="com.xxx.common.interceptor.TestInterceptor"></bean> &lt;!&ndash;这个类就是我们自定义的Interceptor &ndash;&gt;-->
         <!--</mvc:interceptor>-->
         <!--&lt;!&ndash; 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法  &ndash;&gt;-->

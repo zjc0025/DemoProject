@@ -22,4 +22,15 @@ public class MD5Utils {
         return password;
     }
 
+    public static void main(String[] args) {
+        String saltSource = "blog";
+        String hashAlgorithmName = "MD5";
+        Object salt = new Md5Hash(saltSource);
+        int hashIterations = 1024;
+        String pass = "123";
+        Object result = new SimpleHash(hashAlgorithmName, pass, salt, hashIterations);
+        String password = result.toString();
+        System.out.println(password);
+    }
+
 }

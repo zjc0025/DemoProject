@@ -10,14 +10,27 @@ import java.util.List;
  */
 public class PageResult {
 
+    private int pageIndex;
+
+    private int pageSize;
+
     private int total;
 
     private List<?> data;
 
     public PageResult(Page page, List<?> data){
-
+        this.pageSize = page.getPageSize();
+        this.pageIndex = page.getPageIndex();
         this.total = page.getTotal();
-        this.data = data;
+        int dataSize = data.size();
+        if(dataSize <= pageSize){
+            this.data = data;
+        }else {
+            int startIndex = pageSize * pageIndex;
+            int endIndex = (pageSize * pageIndex + pageSize - 1)>=dataSize?dataSize:(pageSize * pageIndex + pageSize);
+            this.data = data.subList(startIndex, endIndex);
+        }
+
     }
 
     public int getTotal() {
@@ -34,5 +47,21 @@ public class PageResult {
 
     public void setData(List<?> data) {
         this.data = data;
+    }
+
+    public int getPageIndex() {
+        return pageIndex;
+    }
+
+    public void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 }

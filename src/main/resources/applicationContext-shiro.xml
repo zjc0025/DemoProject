@@ -21,7 +21,6 @@
             <value>
                 /css/**=anon
                 /resources/**=anon
-                /WEB-INF/views/**=anon
                 /images/**=anon
                 /login.jsp*=anon
                 //user/login2=anon
