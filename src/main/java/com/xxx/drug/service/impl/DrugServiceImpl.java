@@ -108,4 +108,9 @@ public class DrugServiceImpl implements IDrugService {
         return this.drugMapper.queryDrugLog(param);
     }
 
+    @Override
+    public List<Drug> drugCount() {
+        return this.drugMapper.drugCount();
+    }
+
 }

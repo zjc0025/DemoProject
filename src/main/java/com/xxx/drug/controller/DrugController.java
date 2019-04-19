@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName DrugController
@@ -78,6 +80,18 @@ public class DrugController {
         PageResult pageResult = new PageResult(page, logs);
 
         return pageResult;
+    }
+
+    @RequestMapping("/drugCount")
+    @ResponseBody
+    public Map drugCount() {
+        List<Drug> drugs = this.drugService.drugCount();
+
+        Map map = new HashMap();
+        map.put("status", "查询成功");
+        map.put("data", drugs);
+
+        return map;
     }
 
 }

@@ -66,4 +66,8 @@
 
     </select>
 
+    <select id="drugCount" resultType="com.xxx.drug.model.Drug">
+        select id, code, name, common_name commonName, category, specification, place, status, stock from t_drug
+    </select>
+
 </mapper>

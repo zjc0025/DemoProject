@@ -25,4 +25,6 @@ public interface IDrugService {
     boolean outputDrug(Drug drug);
 
     List<LogEntity> queryDrugLog(Drug drug, Page page);
+
+    List<Drug> drugCount();
 }
