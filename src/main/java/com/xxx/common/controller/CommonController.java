@@ -77,4 +77,9 @@ public class CommonController {
         return new ModelAndView("drug/list");
     }
 
+    @RequestMapping("/drugCount")
+    public ModelAndView drugCount(){
+        return new ModelAndView("drug/drug-count");
+    }
+
 }

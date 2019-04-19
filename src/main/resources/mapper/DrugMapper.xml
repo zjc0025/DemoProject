@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IDrugMapper接口方法提供sql语句配置 -->
+<mapper namespace="com.xxx.drug.dao.IDrugMapper">
+
+    <select id="page" parameterType="java.util.Map" resultType="com.xxx.drug.model.Drug">
+        select id,
+        code,
+        name,
+        common_name commonName,
+        category,
+        specification,
+        place,
+        status,
+        stock
+        from t_drug
+        where 1=1
+        <if test="name != null and name != ''">
+            and name like '%'||#{name}||'%'
+        </if>
+        <if test="sortField != null and sortField != ''">
+            order by ${sortField} ${sortOrder}
+        </if>
+    </select>
+
+    <insert id="addDrug" parameterType="com.xxx.drug.model.Drug">
+        insert into t_drug (id, code, name, common_name, category, specification, place) values
+        (#{id}, #{code}, #{name}, #{commonName}, #{category}, #{specification}, #{place})
+    </insert>
+
+    <update id="updateDrug" parameterType="com.xxx.drug.model.Drug">
+        update t_drug set
+        code = #{code},
+        name = #{name},
+        common_name = #{commonName},
+        category = #{category},
+        specification = #{specification},
+        place = #{place},
+        status = #{status}
+        where id = #{id}
+    </update>
+
+    <update id="inputDrug" parameterType="com.xxx.drug.model.Drug">
+        update t_drug set
+        stock = #{stock}
+        where id = #{id}
+    </update>
+
+    <select id="queryStock" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select stock from t_drug where id = #{id}
+    </select>
+
+    <select id="queryDrugLog" resultType="com.xxx.drug.model.LogEntity">
+        select * from t_log
+        where drugid = #{drugId}
+        order by updatedate
+        <choose>
+            <when test="sortOrder != null and sortOrder != ''">
+                ${sortOrder}
+            </when>
+            <otherwise>
+                desc
+            </otherwise>
+        </choose>
+
+    </select>
+
+</mapper>

@@ -22,14 +22,18 @@ public class PageResult {
         this.pageSize = page.getPageSize();
         this.pageIndex = page.getPageIndex();
         this.total = page.getTotal();
-        int dataSize = data.size();
-        if(dataSize <= pageSize){
-            this.data = data;
-        }else {
-            int startIndex = pageSize * pageIndex;
-            int endIndex = (pageSize * pageIndex + pageSize - 1)>=dataSize?dataSize:(pageSize * pageIndex + pageSize);
-            this.data = data.subList(startIndex, endIndex);
+        if(data != null){
+            this.total = data.size();
+            int dataSize = data.size();
+            if(dataSize <= pageSize){
+                this.data = data;
+            }else {
+                int startIndex = pageSize * pageIndex;
+                int endIndex = (pageSize * pageIndex + pageSize - 1)>=dataSize?dataSize:(pageSize * pageIndex + pageSize);
+                this.data = data.subList(startIndex, endIndex);
+            }
         }
+
 
     }
 

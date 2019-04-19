@@ -20,6 +20,8 @@ public class Drug {
 
     private String specification;
 
+    private String place;
+
     private String status;
 
     private long stock;
@@ -86,5 +88,13 @@ public class Drug {
 
     public void setStock(long stock) {
         this.stock = stock;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 }

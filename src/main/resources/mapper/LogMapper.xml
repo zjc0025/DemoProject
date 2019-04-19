@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IDrugMapper接口方法提供sql语句配置 -->
+<mapper namespace="com.xxx.common.dao.LogMapper">
+
+    <insert id="saveLog" parameterType="com.xxx.drug.model.LogEntity">
+        insert into t_log (loginname, drugid, updatedate, describe, module, method, ip, responsetime, result) values
+        (#{loginName}, #{drugId}, #{updateDate}, #{describe}, #{module}, #{method}, #{ip}, #{responseTime}, #{result})
+    </insert>
+
+</mapper>
