@@ -27,4 +27,6 @@ public interface IDrugService {
     List<LogEntity> queryDrugLog(Drug drug, Page page);
 
     List<Drug> drugCount();
+
+    boolean checkDrugCode(String drugCode);
 }

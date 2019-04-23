@@ -6,11 +6,11 @@
     <title>药品编辑</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-    <script src="../../js/boot.js" type="text/javascript"></script>
-    <script src="../../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../../resources/js/boot.js" type="text/javascript"></script>
+    <script src="../../resources/js/jquery.min.js" type="text/javascript"></script>
 
-    <script src="../../js/cityselect/cityselect.js"></script>
-    <link href="../../js/cityselect/cityLayout.css" type="text/css" rel="stylesheet">
+    <script src="../../resources/js/cityselect/cityselect.js"></script>
+    <link href="../../resources/js/cityselect/cityLayout.css" type="text/css" rel="stylesheet">
 
     <style type="text/css">
         html, body
@@ -32,17 +32,17 @@
             <tr>
                 <td style="width:80px;">药品编号：</td>
                 <td style="width:150px;">
-                    <input name="code" class="mini-textbox"  required="true"/>
+                    <input name="code" class="mini-textbox"  required="true" readonly="readonly" maxlength="80"/>
                 </td>
                 <td style="width:80px;">药品名称：</td>
                 <td style="width:150px;">
-                    <input name="name" class="mini-textbox"  required="true"/>
+                    <input name="name" class="mini-textbox"  required="true" maxlength="80"/>
                 </td>
             </tr>
             <tr>
                 <td style="width:80px;">药品通用名：</td>
                 <td style="width:150px;">
-                    <input name="commonName" class="mini-textbox" required="true"/>
+                    <input name="commonName" class="mini-textbox" required="true" maxlength="80"/>
                 </td>
                 <td style="width:80px;">药品分类：</td>
                 <td style="width:150px;">
@@ -54,11 +54,11 @@
                 <td style="width:80px;">药品规格：</td>
                 <td style="width:150px;">
                     <input id="specification" name="specification" class="mini-textbox" valueField="id" textField="value"
-                           required="true"/>
+                           required="true" maxlength="80"/>
                 </td>
                 <td style="width:80px;">药品产地：</td>
                 <td style="width:150px;">
-                    <input name="place" id="place"  type="text"  class="city_input" style="width:150px; height: 24px;"  >
+                    <input name="place" id="place"  type="text"  class="city_input" style="width:150px; height: 24px;" readonly="readonly" >
                 </td>
             </tr>
             <tr>
@@ -102,8 +102,16 @@
 
 
     function SaveData() {
+        var placeVal = $("#place").val();
         form.validate();
         if(form.isValid() == false){
+            return;
+        }
+        if(form.isValid() == false){
+            return;
+        }
+        if(placeVal == ""){
+            mini.alert("产地不能为空", "提示");
             return;
         }
         var data = form.getData();

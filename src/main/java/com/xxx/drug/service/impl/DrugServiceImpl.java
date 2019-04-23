@@ -14,6 +14,8 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @ClassName DrugServiceImpl
@@ -28,6 +30,8 @@ public class DrugServiceImpl implements IDrugService {
 
     @Resource
     private IDrugMapper drugMapper;
+
+    Lock lock = new ReentrantLock();
 
     @Override
     public List<Drug> drugPage(Drug drug, Page page) {
@@ -68,8 +72,9 @@ public class DrugServiceImpl implements IDrugService {
     @Override
     public boolean inputDrug(Drug drug) {
         try{
+            lock.lock();
             //查询数据库库存
-            int oldStock = this.drugMapper.queryStock(drug.getId());
+            long oldStock = this.drugMapper.queryStock(drug.getId());
             //增加请求的库存
             drug.setStock(oldStock + drug.getStock());
             //更新库存
@@ -78,14 +83,17 @@ public class DrugServiceImpl implements IDrugService {
         }catch (Exception e){
             logger.error("药品入库失败",e);
             return false;
+        }finally {
+            lock.unlock();
         }
     }
 
     @Override
     public boolean outputDrug(Drug drug) {
         try{
+            lock.lock();
             //查询数据库库存
-            int oldStock = this.drugMapper.queryStock(drug.getId());
+            long oldStock = this.drugMapper.queryStock(drug.getId());
             //减去请求的库存
             drug.setStock(oldStock - drug.getStock());
             //更新库存
@@ -94,6 +102,8 @@ public class DrugServiceImpl implements IDrugService {
         }catch (Exception e){
             logger.error("药品出库失败",e);
             return false;
+        }finally {
+            lock.unlock();
         }
     }
 
@@ -111,6 +121,15 @@ public class DrugServiceImpl implements IDrugService {
     @Override
     public List<Drug> drugCount() {
         return this.drugMapper.drugCount();
+    }
+
+    @Override
+    public boolean checkDrugCode(String drugCode) {
+        Drug drug = drugMapper.checkDrugCode(drugCode);
+        if(null == drug){
+            return true;
+        }
+        return false;
     }
 
 }

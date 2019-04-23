@@ -47,7 +47,7 @@
         where id = #{id}
     </update>
 
-    <select id="queryStock" parameterType="java.lang.String" resultType="java.lang.Integer">
+    <select id="queryStock" parameterType="java.lang.String" resultType="java.lang.Long">
         select stock from t_drug where id = #{id}
     </select>
 
@@ -68,6 +68,10 @@
 
     <select id="drugCount" resultType="com.xxx.drug.model.Drug">
         select id, code, name, common_name commonName, category, specification, place, status, stock from t_drug
+    </select>
+
+    <select id="checkDrugCode" parameterType="java.lang.String" resultType="com.xxx.drug.model.Drug">
+        select code from t_drug where code = #{code}
     </select>
 
 </mapper>

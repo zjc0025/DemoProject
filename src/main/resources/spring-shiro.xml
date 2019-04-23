@@ -13,18 +13,18 @@
     <bean id="shiroFilter"
           class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager" />
-        <property name="loginUrl" value="/login.html" />
-        <property name="successUrl" value="/successUrl.jsp" />
-        <property name="unauthorizedUrl" value="/unauthorizedUrl.jsp" />
+        <property name="loginUrl" value="/login" />
+        <property name="successUrl" value="/home" />
+        <property name="unauthorizedUrl" value="/login" />
         <!-- 指定URL拦截策略 ,静态资源放行，登录放行，其他的需要认证也就是登录-->
         <property name="filterChainDefinitions">
             <value>
-                /css/**=anon
+                <!--/css/**=anon-->
                 /resources/**=anon
-                /images/**=anon
+                <!--/images/**=anon-->
                 /login.jsp*=anon
-                //user/login2=anon
-                /validatecode.jsp*=anon
+                /user/login2=anon
+                <!--/validatecode.jsp*=anon-->
                 /**=authc
             </value>
         </property>

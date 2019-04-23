@@ -16,21 +16,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class CommonController {
 
     @RequestMapping("/login")
-    public ModelAndView login(){
-
-        return new ModelAndView("login");
+    public String login(){
+        return "login";
     }
 
     @RequestMapping("/home")
-    public ModelAndView home(){
-
-        return new ModelAndView("home");
+    public String home(){
+        return "welcome/home";
     }
 
     @RequestMapping("/welcome")
-    public ModelAndView welcome(){
-
-        return new ModelAndView("welcome/welcome");
+    public String welcome(){
+        return "welcome/welcome";
     }
 
     /**
@@ -78,8 +75,32 @@ public class CommonController {
     }
 
     @RequestMapping("/drugCount")
+    @RequiresPermissions("drug_query")
     public ModelAndView drugCount(){
         return new ModelAndView("drug/drug-count");
+    }
+
+    @RequestMapping("/drugAdd")
+    @RequiresPermissions("drug_query")
+    public ModelAndView drugAdd(){
+        return new ModelAndView("drug/add");
+    }
+
+    @RequestMapping("/drugEdit")
+    @RequiresPermissions("drug_query")
+    public ModelAndView drugEdit(){
+        return new ModelAndView("drug/edit");
+    }
+
+    @RequestMapping("/logList")
+    @RequiresPermissions("drug_query")
+    public ModelAndView logList(){
+        return new ModelAndView("drug/log-list");
+    }
+
+    @RequestMapping("/unauthenticatedException")
+    public ModelAndView unauthenticatedException(){
+        return new ModelAndView("account/error");
     }
 
 }

@@ -23,7 +23,7 @@
                     <a class="mini-button" iconCls="icon-reload" onclick="inputOutput()">出库/入库</a>
                 </td>
                 <td style="white-space:nowrap;">
-                    <input id="key" class="mini-textbox" emptyText="请输入药品名称" style="width:150px;" onenter="onKeyEnter"/>
+                    <input id="key" class="mini-textbox" emptyText="请输入药品名称" style="width:150px;" onenter="onKeyEnter" maxlength="100"/>
                     <a class="mini-button" onclick="search()">查询</a>
                     <a class="mini-button" onclick="reset()">清空</a>
                 </td>
@@ -72,7 +72,7 @@
     function logList(id,name) {
         // alert(name);
         mini.open({
-            url: "/resources/views/drug/log-list.html",
+            url: "/logList",
             title: name + " - 操作日志", width: 642, height: 400,
             onload: function () {
                 var iframe = this.getIFrameEl();
@@ -100,7 +100,7 @@
         mini.open({
             targetWindow: window,
 
-            url: "/resources/views/drug/add.html",
+            url: "/drugAdd",
             title: "添加药品", width: 631, height: 276,
             onload: function () {
                 var iframe = this.getIFrameEl();
@@ -118,7 +118,7 @@
         var rows = grid.getSelecteds();
         if (rows.length == 1) {
             mini.open({
-                url: "/resources/views/drug/edit.html",
+                url: "/drugEdit",
                 title: "编辑药品", width: 631, height: 276,
                 onload: function () {
                     var iframe = this.getIFrameEl();

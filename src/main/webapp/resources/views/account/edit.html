@@ -34,7 +34,7 @@
                 </td>
                 <td style="width:80px;">密码：</td>
                 <td style="width:150px;">
-                    <input name="PASSWORD" class="mini-password" required="true"  emptyText="请输入密码"/>
+                    <input name="PASSWORD" class="mini-password" required="true" emptyText="请输入密码"/>
                 </td>
             </tr>
             <tr>
@@ -84,6 +84,10 @@
 
 
     function SaveData() {
+        form.validate();
+        if(form.isValid() == false){
+            return;
+        }
         var data = form.getData();
         var json = mini.encode(data);
         $.ajax({

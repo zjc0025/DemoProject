@@ -82,17 +82,6 @@ public class UserController {
         return map;
     }
 
-//    @RequestMapping("/page")
-//    @ResponseBody
-//    public PageResult page(Page page) {
-//        List<User> users = this.userService.userPage(page);
-//        page.setTotal(users.size());
-//
-//        PageResult pageResult = new PageResult(page, users);
-//
-//        return pageResult;
-//    }
-
     @RequestMapping("/page")
     @ResponseBody
     public PageResult page( UserDto userDto, Page page) {
@@ -132,6 +121,28 @@ public class UserController {
     public boolean checkAccount(@RequestBody String loginName) {
         boolean f = this.userService.checkAccount(loginName);
         return f;
+    }
+
+    @RequestMapping("/getUserInfo")
+    @ResponseBody
+    public Map getUserInfo(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("loginUser");
+        Map map = new HashMap();
+        map.put("status", true);
+        map.put("data", user);
+        return map;
+    }
+
+    @RequestMapping("/logout")
+    @ResponseBody
+    public Map logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        Map map = new HashMap();
+        map.put("status", true);
+//        map.put("data", user);
+        return map;
     }
 
 }

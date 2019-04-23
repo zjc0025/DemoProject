@@ -23,9 +23,11 @@ public interface IDrugMapper {
 
     void inputDrug(Drug drug);
 
-    int queryStock(String id);
+    long queryStock(String id);
 
     List<LogEntity> queryDrugLog(Map param);
 
     List<Drug> drugCount();
+
+    Drug checkDrugCode(String drugCode);
 }

@@ -6,6 +6,7 @@ import com.xxx.drug.aspect.DrugLog;
 import com.xxx.drug.model.Drug;
 import com.xxx.drug.model.LogEntity;
 import com.xxx.drug.service.IDrugService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -92,6 +93,13 @@ public class DrugController {
         map.put("data", drugs);
 
         return map;
+    }
+
+    @RequestMapping("/checkDrugCode")
+    @ResponseBody
+    public boolean checkDrugCode(@RequestBody String drugCode) {
+        boolean f = this.drugService.checkDrugCode(drugCode);
+        return f;
     }
 
 }

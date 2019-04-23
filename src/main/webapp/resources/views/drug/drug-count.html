@@ -94,7 +94,7 @@
             }
         },
         title: {
-            text: '药品库存展示',
+            // text: '药品库存展示',
             subtext: '提示：点击或滚动鼠标可以缩放'
         },
         xAxis: {
@@ -227,7 +227,7 @@
         myChart.dispatchAction({
             type: 'dataZoom',
             startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
-            endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
+            endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, names.length - 1)]
         });
     });
     if (option && typeof option === "object") {

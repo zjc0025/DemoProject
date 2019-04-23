@@ -38,7 +38,8 @@
             <tr>
                 <td style="width:80px;">操作数量：</td>
                 <td style="width:150px;">
-                    <input name="ostock" id="ostock" class="mini-textbox"  required="true"/>
+                    <input name="ostock" id="ostock" class="mini-textbox" onvalidation="onDrugNumValidation"
+                           required="true" maxLength="10"/>
                 </td>
             </tr>
         </table>
@@ -194,9 +195,10 @@
         return false;
     }
 
-    function onPasswordValidation(e){
-        if (e.value.length < 6){
-            e.errorText = "密码不能少于6位";
+    function onDrugNumValidation(e){
+        var reg = /^[1-9]{1}[0-9]{0,20}$/;
+        if (!reg.test(e.value)){
+            e.errorText = "请输入正整数";
             e.isValid = false;
         }
     }

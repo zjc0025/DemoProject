@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>药库登录</title>
 
     <!--jQuery js-->
     <script src="../resources/js/boot.js" type="text/javascript"></script>
@@ -50,6 +50,10 @@
 </div>
 
 <script type="text/javascript">
+    if (window != top)
+    {
+        top.location.href = location.href;
+    }
     mini.parse();
 
     var loginWindow = mini.get("loginWindow");
@@ -76,7 +80,7 @@
                     loginWindow.hide();
                     mini.loading("登录成功，请稍后...", "登录成功");
                     setTimeout(function () {
-                        window.location = "home.html";
+                        window.location = "/home";
                     }, 700);
                 }else if(text == "false"){
                     mini.alert("用户名或密码错误!","提示",function(){
