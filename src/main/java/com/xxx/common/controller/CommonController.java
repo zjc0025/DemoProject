@@ -92,6 +92,11 @@ public class CommonController {
         return new ModelAndView("drug/edit");
     }
 
+    @RequestMapping("/inputOutput")
+    public ModelAndView inputOutput(){
+        return new ModelAndView("drug/input-output");
+    }
+
     @RequestMapping("/logList")
     @RequiresPermissions("drug_query")
     public ModelAndView logList(){

@@ -6,11 +6,11 @@
     <title>药品编辑</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-    <script src="../../resources/js/boot.js" type="text/javascript"></script>
-    <script src="../../resources/js/jquery.min.js" type="text/javascript"></script>
+    <script src="resources/js/boot.js" type="text/javascript"></script>
+    <script src="resources/js/jquery.min.js" type="text/javascript"></script>
 
-    <script src="../../resources/js/cityselect/cityselect.js"></script>
-    <link href="../../resources/js/cityselect/cityLayout.css" type="text/css" rel="stylesheet">
+    <script src="resources/js/cityselect/cityselect.js"></script>
+    <link href="resources/js/cityselect/cityLayout.css" type="text/css" rel="stylesheet">
 
     <style type="text/css">
         html, body
@@ -118,7 +118,7 @@
         data.place = $("#place").val();
         var json = mini.encode(data);
         $.ajax({
-            url: "/drug/updateDrug",
+            url: "drug/updateDrug",
             type: "post",
             data: json,
             // dataType:"json",
@@ -171,7 +171,7 @@
         }
         if (e.isValid) {
             $.ajax({
-                url: "/user/checkAccount",
+                url: "user/checkAccount",
                 type: "post",
                 data: e.value,
                 // dataType:"json",

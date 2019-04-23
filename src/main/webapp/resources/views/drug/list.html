@@ -6,9 +6,9 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <!--<link href="../demo.css" rel="stylesheet" type="text/css" />-->
 
-    <script src="../../resources/js/boot.js" type="text/javascript"></script>
-    <script src="../../resources/js/miniui/locale/en_US.js" type="text/javascript"></script>
-    <script src="../../resources/js/ColumnsMenu.js" type="text/javascript"></script>
+    <script src="resources/js/boot.js" type="text/javascript"></script>
+    <script src="resources/js/miniui/locale/en_US.js" type="text/javascript"></script>
+    <script src="resources/js/ColumnsMenu.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -32,7 +32,7 @@
     </div>
 </div>
 <div id="datagrid1" class="mini-datagrid" style="width:100%;height:350px;" allowResize="true"
-     url="/drug/page"  idField="id" multiSelect="true">
+     url="drug/page"  idField="id" multiSelect="true">
     <div property="columns">
         <div type="checkcolumn"></div>
         <div type="indexcolumn" width="30">序号</div>
@@ -72,7 +72,7 @@
     function logList(id,name) {
         // alert(name);
         mini.open({
-            url: "/logList",
+            url: "logList",
             title: name + " - 操作日志", width: 642, height: 400,
             onload: function () {
                 var iframe = this.getIFrameEl();
@@ -100,7 +100,7 @@
         mini.open({
             targetWindow: window,
 
-            url: "/drugAdd",
+            url: "drugAdd",
             title: "添加药品", width: 631, height: 276,
             onload: function () {
                 var iframe = this.getIFrameEl();
@@ -118,7 +118,7 @@
         var rows = grid.getSelecteds();
         if (rows.length == 1) {
             mini.open({
-                url: "/drugEdit",
+                url: "drugEdit",
                 title: "编辑药品", width: 631, height: 276,
                 onload: function () {
                     var iframe = this.getIFrameEl();
@@ -149,7 +149,7 @@
                 mini.alert("该药品已停用，无法操作！", "提示",function(){return});
             }else {
                 mini.open({
-                    url: "/resources/views/drug/input-output.html",
+                    url: "inputOutput",
                     title: "出入库操作", width: 280, height: 180,
                     onload: function () {
                         var iframe = this.getIFrameEl();

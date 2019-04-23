@@ -6,8 +6,8 @@
     <title>出库/入库</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-    <script src="../../js/boot.js" type="text/javascript"></script>
-    <script src="../../js/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="resources/js/boot.js" type="text/javascript"></script>
+    <script src="resources/js/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
 
     <style type="text/css">
         html, body
@@ -87,7 +87,7 @@
         data.stock = mini.get("ostock").getValue();
         var json = mini.encode(data);
         $.ajax({
-            url: "/drug/inputDrug",
+            url: "drug/inputDrug",
             type: "post",
             data: json,
             // dataType:"json",
@@ -118,7 +118,7 @@
             data.stock = mini.get("ostock").getValue();
             var json = mini.encode(data);
             $.ajax({
-                url: "/drug/outputDrug",
+                url: "drug/outputDrug",
                 type: "post",
                 data: json,
                 // dataType:"json",
@@ -159,7 +159,7 @@
         }
         if (e.isValid) {
             $.ajax({
-                url: "/user/checkAccount",
+                url: "user/checkAccount",
                 type: "post",
                 data: e.value,
                 // dataType:"json",

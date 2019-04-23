@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title>ECharts药品库存展示</title>
-    <script src="../../resources/js/echarts.min.js"></script>
-    <script src="../../resources/js/boot.js" type="text/javascript"></script>
-    <script src="../../resources/js/jquery.min.js" type="text/javascript"></script>
+    <script src="resources/js/echarts.min.js"></script>
+    <script src="resources/js/boot.js" type="text/javascript"></script>
+    <script src="resources/js/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
 <div id="container" style="width: 95%;height: 440px; padding-top: 8px"></div>
@@ -35,7 +35,7 @@
     var counts = [];
     $(function () {
         $.ajax({
-            url: "/drug/drugCount",
+            url: "drug/drugCount",
             type: "post",
             // data: json,
             // dataType:"json",

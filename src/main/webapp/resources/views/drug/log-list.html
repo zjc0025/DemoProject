@@ -6,15 +6,15 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <!--<link href="../demo.css" rel="stylesheet" type="text/css" />-->
 
-    <script src="../../resources/js/boot.js" type="text/javascript"></script>
-    <script src="../../resources/js/miniui/locale/en_US.js" type="text/javascript"></script>
-    <script src="../../resources/js/ColumnsMenu.js" type="text/javascript"></script>
+    <script src="resources/js/boot.js" type="text/javascript"></script>
+    <script src="resources/js/miniui/locale/en_US.js" type="text/javascript"></script>
+    <script src="resources/js/ColumnsMenu.js" type="text/javascript"></script>
 
 </head>
 <body>
 
 <div id="datagrid1" class="mini-datagrid" style="width:100%;height:346px;" allowResize="true"
-     url="/drug/queryDrugLog"  idField="" multiSelect="true">
+     url="drug/queryDrugLog"  idField="" multiSelect="true">
     <div property="columns">
         <div field="loginName" width="120" headerAlign="center">操作用户登录名</div>
         <div field="describe" width="120" headerAlign="center" >操作行为</div>
@@ -52,7 +52,7 @@
         mini.open({
             targetWindow: window,
 
-            url: "/addAccount",
+            url: "addAccount",
             title: "添加账号", width: 500, height: 200,
             onload: function () {
                 var iframe = this.getIFrameEl();
@@ -66,28 +66,7 @@
         });
     }
 
-    function edit() {
-        var rows = grid.getSelecteds();
-        if (rows.length == 1) {
-            mini.open({
-                url: "/resources/views/account/edit.html",
-                title: "编辑员工", width: 500, height: 200,
-                onload: function () {
-                    var iframe = this.getIFrameEl();
 
-                    var data = { action: "edit", data: rows };
-                    iframe.contentWindow.SetData(data);
-                },
-                ondestroy: function (action) {
-                    grid.reload();
-                }
-            });
-
-        } else {
-            mini.alert("请选中一条记录", "提示");
-        }
-
-    }
     function remove() {
 
         var rows = grid.getSelecteds();
