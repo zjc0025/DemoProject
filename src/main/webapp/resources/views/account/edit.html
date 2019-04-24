@@ -34,7 +34,7 @@
                 </td>
                 <td style="width:80px;">密码：</td>
                 <td style="width:150px;">
-                    <input name="PASSWORD" class="mini-password" required="true" emptyText="请输入密码"/>
+                    <input name="PASSWORD" class="mini-password" required="true" onvalidation="onPasswordValidation" emptyText="请输入密码"/>
                 </td>
             </tr>
             <tr>
@@ -148,6 +148,13 @@
 
         positionCombo.load("../data/AjaxService.aspx?method=GetPositionsByDepartmenId&id=" + dept_id);
         positionCombo.setValue("");
+    }
+
+    function onPasswordValidation(e){
+        if (e.value.length < 6){
+            e.errorText = "密码不能少于6位";
+            e.isValid = false;
+        }
     }
 
 
